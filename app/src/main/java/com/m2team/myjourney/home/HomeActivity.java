@@ -36,7 +36,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.easyandroidanimations.library.Animation;
+import com.easyandroidanimations.library.FadeInAnimation;
+import com.easyandroidanimations.library.FadeOutAnimation;
 import com.easyandroidanimations.library.SlideOutAnimation;
+import com.easyandroidanimations.library.SlideOutUnderneathAnimation;
 import com.facebook.share.internal.ShareFeedContent;
 import com.facebook.share.model.ShareContent;
 import com.facebook.share.model.ShareMedia;
@@ -500,7 +503,6 @@ public class HomeActivity extends BaseActivity implements HomeAdapter.OnItemClic
     @Override
     public void onItemClick(int id, DateTime dateTime) {
         startActivityForResult(NewEntryActivity.createIntent(this, id, dateTime), REQ_NEW_JOURNEY);
-        //startActivity(new Intent(this, ScrollingActivity.class));
     }
 
     @Override
@@ -510,15 +512,14 @@ public class HomeActivity extends BaseActivity implements HomeAdapter.OnItemClic
 
     @Override
     public void onDeleteItem(final int pos) {
-        Log.d("onDelete");
         View view = getViewInRecycleView(pos);
         if (view != null) {
-            new SlideOutAnimation(view).setDirection(Animation.DIRECTION_LEFT).animate();
+            new FadeOutAnimation(view).animate();
         }
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                adapter.reloadList();
+              adapter.reloadList();
             }
         }, 500);
 
