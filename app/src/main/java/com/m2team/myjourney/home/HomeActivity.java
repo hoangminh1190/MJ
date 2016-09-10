@@ -191,6 +191,7 @@ public class HomeActivity extends BaseActivity implements HomeAdapter.OnItemClic
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+        recyclerView.setItemAnimator(new SlideInLeftAn);
 
         initSwipe();
 
