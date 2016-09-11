@@ -35,11 +35,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.easyandroidanimations.library.Animation;
-import com.easyandroidanimations.library.FadeInAnimation;
-import com.easyandroidanimations.library.FadeOutAnimation;
-import com.easyandroidanimations.library.SlideOutAnimation;
-import com.easyandroidanimations.library.SlideOutUnderneathAnimation;
 import com.facebook.share.internal.ShareFeedContent;
 import com.facebook.share.model.ShareContent;
 import com.facebook.share.model.ShareMedia;
@@ -87,11 +82,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
+import jp.wasabeef.recyclerview.animators.OvershootInLeftAnimator;
+import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
+import jp.wasabeef.recyclerview.animators.SlideInRightAnimator;
 
-import static android.R.attr.accountType;
-import static com.m2team.myjourney.R.id.recyclerView;
-import static com.m2team.myjourney.R.id.textViewEmail;
-import static com.m2team.myjourney.R.id.textViewName;
 
 public class HomeActivity extends BaseActivity implements HomeAdapter.OnItemClickListener {
 
@@ -128,6 +122,7 @@ public class HomeActivity extends BaseActivity implements HomeAdapter.OnItemClic
     public ItemTouchHelperExtension mItemTouchHelper;
     public ItemTouchHelperExtension.Callback mCallback;
     private ShareDialog shareDialog;
+    private int mPos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -191,8 +186,7 @@ public class HomeActivity extends BaseActivity implements HomeAdapter.OnItemClic
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
-        recyclerView.setItemAnimator(new SlideInLeftAn);
-
+        recyclerView.setItemAnimator(new SlideInLeftAnimator());
         initSwipe();
 
         DateTimeFormatter formatter = DateTimeFormat.forPattern("MMM");
@@ -354,8 +348,17 @@ public class HomeActivity extends BaseActivity implements HomeAdapter.OnItemClic
         Log.d("HomeActitivy onActivityResult requestCode = " + requestCode + " result " + resultCode);
         if (requestCode == REQ_NEW_JOURNEY) {
             if (resultCode == RESULT_OK) {
-                Log.d("Reload list");
-                adapter.reloadList();
+                Log.d("Reload list " + mPos);
+                adapter.queryJouney();
+                recyclerView.setItemAnimator(new SlideInRightAnimator());
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapter.notifyItemChanged(mPos);
+
+                    }
+                }, 2500);
+
             }
         }
     }
@@ -502,7 +505,8 @@ public class HomeActivity extends BaseActivity implements HomeAdapter.OnItemClic
     }
 
     @Override
-    public void onItemClick(int id, DateTime dateTime) {
+    public void onItemClick(int id, DateTime dateTime, int pos) {
+        mPos = pos;
         startActivityForResult(NewEntryActivity.createIntent(this, id, dateTime), REQ_NEW_JOURNEY);
     }
 
@@ -513,16 +517,17 @@ public class HomeActivity extends BaseActivity implements HomeAdapter.OnItemClic
 
     @Override
     public void onDeleteItem(final int pos) {
-        View view = getViewInRecycleView(pos);
-        if (view != null) {
-            new FadeOutAnimation(view).animate();
-        }
+        recyclerView.setItemAnimator(new OvershootInLeftAnimator());
+        adapter.queryJouney();
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-              adapter.reloadList();
+
+                adapter.notifyItemChanged(pos);
+                recyclerView.setItemAnimator(new SlideInLeftAnimator());
             }
-        }, 500);
+        }, 1500);
 
     }
 
