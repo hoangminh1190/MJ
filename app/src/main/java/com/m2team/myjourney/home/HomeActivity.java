@@ -131,6 +131,7 @@ public class HomeActivity extends BaseActivity implements HomeAdapter.OnItemClic
 
         ButterKnife.bind(this);
 
+        avatarImageView.setVisibility(View.GONE);
         toolbar.setTitle("");
         toolbar.setContentInsetsAbsolute(0, 0);
         toolbar.getContentInsetEnd();
