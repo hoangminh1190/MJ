@@ -66,7 +66,7 @@ public class ImagePreviewActivity extends FragmentActivity implements View.OnCli
 
         mCbSelected = (CheckBox) findViewById(R.id.btn_check);
         mTitleCount = (TextView) findViewById(R.id.tv_title_count);
-        mTitleCount.setText("1/" + mImageList.size());
+        mTitleCount.setText("1");
 
         int selectedCount = AndroidImagePicker.getInstance().getSelectImageCount();
 
@@ -87,8 +87,8 @@ public class ImagePreviewActivity extends FragmentActivity implements View.OnCli
                     if (mCbSelected.isChecked()) {
                         //holder.cbSelected.setCanChecked(false);
                         mCbSelected.toggle();
-                        String toast = getResources().getString(R.string.you_have_a_select_limit,androidImagePicker.getSelectLimit());
-                        Toast.makeText(ImagePreviewActivity.this, toast, Toast.LENGTH_SHORT).show();
+                        //String toast = getResources().getString(R.string.you_have_a_select_limit,androidImagePicker.getSelectLimit());
+                        //Toast.makeText(ImagePreviewActivity.this, toast, Toast.LENGTH_SHORT).show();
                     } else {
                         //
                     }
@@ -152,7 +152,7 @@ public class ImagePreviewActivity extends FragmentActivity implements View.OnCli
 
     @Override
     public void onImagePageSelected(int position, ImageItem item,boolean isSelected) {
-        mTitleCount.setText(position + 1 + "/" + mImageList.size());
+        mTitleCount.setText(String.valueOf(position + 1));
         mCbSelected.setChecked(isSelected);
     }
 
@@ -160,7 +160,7 @@ public class ImagePreviewActivity extends FragmentActivity implements View.OnCli
     public void onImageSelectChange(int position, ImageItem item, int selectedItemsCount, int maxSelectLimit) {
         if(selectedItemsCount > 0){
             mBtnOk.setEnabled(true);
-            mBtnOk.setText(getResources().getString(R.string.select_complete,selectedItemsCount,maxSelectLimit));
+            mBtnOk.setText(getResources().getString(R.string.select_complete,selectedItemsCount));
         }else{
             mBtnOk.setText(getResources().getString(R.string.complete));
             mBtnOk.setEnabled(false);

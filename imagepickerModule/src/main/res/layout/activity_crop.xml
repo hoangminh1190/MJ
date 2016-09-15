@@ -42,7 +42,9 @@
             android:gravity="center"
             android:text="@string/select"
             android:textColor="@color/white"
-            android:textSize="18dp" />
+            android:textSize="18dp"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@+id/divider" />
 
         <View
             android:id="@+id/divider"
@@ -62,7 +64,9 @@
             android:gravity="center"
             android:text="Done"
             android:textColor="@color/white"
-            android:textSize="18dp" />
+            android:textSize="18dp"
+            android:layout_toEndOf="@+id/divider"
+            android:layout_alignParentEnd="true" />
 
     </RelativeLayout>
 

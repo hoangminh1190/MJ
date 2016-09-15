@@ -52,7 +52,7 @@ import java.util.List;
 public class ImagePreviewFragment extends Fragment{
     private static final String TAG = ImagePreviewFragment.class.getSimpleName();
 
-    Activity mContext;
+    static Activity mContext;
 
     ViewPager mViewPager;
     TouchImageAdapter mAdapter ;
@@ -60,9 +60,9 @@ public class ImagePreviewFragment extends Fragment{
     List<ImageItem> mImageList;
     private int mCurrentItemPosition = 0;
 
-    private boolean enableSingleTap = true;//singleTap to do something
+    private static boolean enableSingleTap = true;//singleTap to do something
 
-    ImgLoader mImagePresenter;//interface to load image,you can implements it with your own code
+    static ImgLoader mImagePresenter;//interface to load image,you can implements it with your own code
     AndroidImagePicker androidImagePicker;
 
     @Override
@@ -161,7 +161,7 @@ public class ImagePreviewFragment extends Fragment{
     }
 
     @SuppressLint("ValidFragment")
-    private class SinglePreviewFragment extends Fragment {
+    public static class SinglePreviewFragment extends Fragment {
         public static final String KEY_URL = "key_url";
         private TouchImageView imageView;
         private String url;

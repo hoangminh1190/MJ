@@ -34,7 +34,9 @@
         android:paddingRight="2dp"
         android:paddingBottom="50dp"
         android:clipToPadding="false"
-        android:numColumns="3" />
+        android:numColumns="3"
+        android:paddingEnd="2dp"
+        android:paddingStart="2dp" />
 
     <RelativeLayout android:id="@+id/footer_panel"
         android:layout_width="match_parent"
@@ -58,7 +60,10 @@
             android:singleLine="true"
             android:ellipsize="end"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:paddingEnd="16dp"
+            android:drawableEnd="@drawable/text_indicator"
+            android:paddingStart="16dp" />
 
 
     </RelativeLayout>

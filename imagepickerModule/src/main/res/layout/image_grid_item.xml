@@ -33,7 +33,7 @@
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:layout_alignParentRight="true"
-        >
+        android:layout_alignParentEnd="true">
 
         <com.pizidea.imagepicker.widget.SuperCheckBox
             android:id="@+id/iv_thumb_check"
@@ -48,7 +48,9 @@
             android:paddingBottom="16dp"
             android:layout_gravity="center"
             android:visibility="gone"
-            />
+            android:paddingEnd="6dp"
+            android:paddingStart="16dp"
+            android:drawableEnd="@drawable/sel_media_item_checked" />
 
     </FrameLayout>
 
